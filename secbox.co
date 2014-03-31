@@ -1,0 +1,27 @@
+# Configuration for secbox.co
+
+server {
+		listen 80;
+		listen [::]:80 ipv6only=on;
+		
+		access_log   /var/www/secbox.co/log/secbox.co.access.log;
+    	error_log    /var/www/secbox.co/log/secbox.co.error.log;
+		
+		root /var/www/secbox.co/public_html;
+		index index.html;
+
+		# Make site accessible from http://secbox.co
+		server_name secbox.co;
+
+		location / {
+				try_files $uri $uri/ /index.html;
+		}
+
+		location /doc/ {
+				alias /usr/share/doc/;
+				autoindex on;
+				allow 127.0.0.1;
+				allow ::1;
+				deny all;
+		}
+}
